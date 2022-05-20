@@ -1,12 +1,15 @@
 import React from 'react';
-import AuthorizationForm from './AuthorizationForm';
+import {observer} from "mobx-react";
+import { authStore } from '../store/authStore';
+import {Spin} from "antd";
+import Form from "./Form";
 
-const Sidenav = () => {
+const Sidenav = observer(() => {
     return (
-        <div className="sidenav">
-            <AuthorizationForm/>
-        </div>
+        <aside className="sidenav">
+            {authStore.isLogging ? <Spin size="large"/> : <Form/>}
+        </aside>
     );
-};
+});
 
 export default Sidenav;

@@ -2,11 +2,13 @@ import React, {useState} from 'react';
 import {Form, Input, Button, Typography} from 'antd';
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
 import {Link} from "react-router-dom";
+import {authStore} from "../store/authStore";
+import {observer} from "mobx-react";
 
-const AuthorizationForm = () => {
+const AuthorizationForm = observer(() => {
     const [isLogin,setIsLogin] = useState(true);
-    const onFinish = (values: any) => {
-        console.log('Success:', values);
+    const onFinish = async (values: any) => {
+        isLogin ? await authStore.logIn(values) : await authStore.signUp(values);
     };
 
     const onFinishFailed = (errorInfo: any) => {
@@ -46,6 +48,6 @@ const AuthorizationForm = () => {
             Or <Link to={""} onClick={() => setIsLogin(prevState => !prevState)}>{isLogin ? "Sign Up":"Log In"}</Link>
         </Form.Item>
     </Form>
-};
+});
 
 export default AuthorizationForm;

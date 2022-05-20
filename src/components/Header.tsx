@@ -1,11 +1,14 @@
 import React from 'react';
-import {Link} from "react-router-dom";
+import DropDownUser from "./DropDownUser";
+import Links from './Links';
+
 
 const Header:React.FC = () => {
     return (
         <header className="header">
             <div className="container">
-                <Link to={"/"} >News</Link>
+                <Links/>
+                <DropDownUser/>
             </div>
         </header>
     );
