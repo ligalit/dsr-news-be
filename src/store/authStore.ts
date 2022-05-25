@@ -25,6 +25,7 @@ class AuthStore{
             }
         }catch (e: AxiosError | any){
             console.log(e.response.status);
+            this.setIsLogging(false);
         }
     }
     async logIn(formData:{login:string,password:string}){
@@ -40,6 +41,7 @@ class AuthStore{
             }
         }catch (e: AxiosError | any){
             console.log(e.response.status);
+            this.setIsLogging(false);
         }
     }
     async logOut(){
@@ -56,6 +58,7 @@ class AuthStore{
             }
         }catch (e: AxiosError | any){
             console.log(e.response.status);
+            this.setIsLogging(false);
         }
     }
 }

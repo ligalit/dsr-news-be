@@ -1,3 +1,5 @@
+import {ReactNode} from "react";
+
 export interface IUser{
     id:number
     firstName:string
@@ -6,6 +8,13 @@ export interface IUser{
     nickname: string
     role: string
     tags: Array<string>
+}
+
+export interface IUserProps{
+    u: Omit<IUser,"login"|"tags">,
+    handleChange:(id: number, value: string) => void;
+    handleDelete:(id:number) => void;
+    children: ReactNode;
 }
 
 export interface INews{

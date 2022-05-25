@@ -3,7 +3,7 @@ import {Avatar, Button, Form, Input, Select, Checkbox, Typography} from "antd";
 import {UserOutlined} from "@ant-design/icons";
 import {observer} from "mobx-react";
 import {userStore} from '../store/userStore';
-import { authStore } from '../store/authStore';
+import {authStore} from '../store/authStore';
 
 const UserForm = observer(() => {
 
@@ -11,13 +11,9 @@ const UserForm = observer(() => {
         await userStore.updateUserInfo(values);
     };
 
-    const onFinishFailed = (errorInfo: any) => {
-        console.log('Failed:', errorInfo);
-    };
-
     useEffect(() => {
-            const getInfo = async() => await userStore.getUserInfo();
-            getInfo();
+                const getInfo = async () => await userStore.getUserInfo();
+                getInfo();
         }
         , [])
 
@@ -39,7 +35,6 @@ const UserForm = observer(() => {
         <Form
             name="user_form"
             onFinish={onFinish}
-            onFinishFailed={onFinishFailed}
             initialValues={{
                 firstName: userStore.firstName,
                 lastName: userStore.lastName,
@@ -53,7 +48,8 @@ const UserForm = observer(() => {
             <Form.Item style={{textAlign: 'center'}}>
                 <Avatar shape="square" size="large"
                         icon={<UserOutlined/>}/>
-                <Typography.Title style={{textAlign:"center",margin:"10px 0px 0px"}} level={4}>{userStore.role}</Typography.Title>
+                <Typography.Title style={{textAlign: "center", margin: "10px 0px 0px"}}
+                                  level={4}>{userStore.role}</Typography.Title>
             </Form.Item>
             {formInputItems.map((item) =>
                 <Form.Item key={item.name} name={item.name}><Input placeholder={item.placeholder}/></Form.Item>)}

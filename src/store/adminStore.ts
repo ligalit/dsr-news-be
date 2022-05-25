@@ -1,9 +1,9 @@
-import {makeAutoObservable} from "mobx";
+import {makeAutoObservable, runInAction} from "mobx";
 import {instance} from "../utils/instance";
 import {INews, IUser} from "../interfaces/interface";
 
 class AdminStore{
-    users!: IUser[];
+    users: IUser[] = [];
     news!: INews[];
 
     constructor() {
@@ -17,7 +17,8 @@ class AdminStore{
                     "token":`${localStorage.getItem("token")}`
                 }
             });
-            this.users = res?.data;
+            if(res.status === 200)
+                runInAction(() => this.users = res?.data)
         }catch (e){
             console.log(e);
         }
@@ -44,7 +45,9 @@ class AdminStore{
                 headers:{
                     "token":`${localStorage.getItem("token")}`
                 }
-            })
+            });
+            if(res.status === 204)
+                runInAction(() => this.users = this.users.map((u) => u.id === id ? {...u,role} : u))
         }catch (e) {
             console.log(e);
         }
@@ -57,6 +60,8 @@ class AdminStore{
                     "token":`${localStorage.getItem("token")}`
                 }
             });
+            if(res.status === 204)
+                runInAction(() => this.users = this.users.filter(u => u.id !== id));
         }catch (e) {
             console.log(e);
         }

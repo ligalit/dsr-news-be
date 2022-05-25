@@ -11,14 +11,9 @@ const AuthorizationForm = observer(() => {
         isLogin ? await authStore.logIn(values) : await authStore.signUp(values);
     };
 
-    const onFinishFailed = (errorInfo: any) => {
-        console.log('Failed:', errorInfo);
-    };
-
     return <Form
         name="authorization_form"
         onFinish={onFinish}
-        onFinishFailed={onFinishFailed}
     >
         <Form.Item>
             <Typography.Title style={{textAlign:"center"}} level={3}>{isLogin ? "Log In":"Sign Up"}</Typography.Title>

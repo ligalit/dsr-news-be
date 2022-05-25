@@ -1,13 +1,16 @@
-import React, {useEffect} from 'react';
-import {adminStore} from "../store/adminStore";
+import React from 'react';
+import Users from '../components/Users';
 
 const AdminPage = () => {
-    useEffect(() => {
-        adminStore.getUserNews(1);
-    },[])
+
     return (
-        <div>
-            Hello Admin
+        <div style={{
+            margin: "10px",
+            display: 'flex',
+            flexDirection: "column",
+            gap: "10px"
+        }}>
+            <Users/>
         </div>
     );
 };

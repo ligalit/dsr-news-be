@@ -1,4 +1,4 @@
-import {makeAutoObservable} from "mobx";
+import {makeAutoObservable, runInAction} from "mobx";
 import {instance} from "../utils/instance";
 
 class UserStore {
@@ -25,7 +25,7 @@ class UserStore {
                 }
             });
             if (res.status === 200) {
-                this.authors = res?.data;
+                runInAction(() => this.authors = res?.data);
             }
         } catch (e) {
             console.log(e);
@@ -42,7 +42,7 @@ class UserStore {
 
             if (res.status === 200) {
                 const info = res?.data?.me;
-                Object.assign(this, info);
+                runInAction(() => Object.assign(this,info));
             }
         } catch (e) {
             console.log(e);
@@ -77,7 +77,7 @@ class UserStore {
                 }
             })
             if(res.status === 200){
-                await this.getUserInfo()
+                runInAction(() => Object.assign(this,data));
             }
         } catch (e) {
             console.log(e);
