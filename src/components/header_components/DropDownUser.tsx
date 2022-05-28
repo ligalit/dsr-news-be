@@ -1,8 +1,8 @@
 import React, {useEffect} from 'react';
 import {Avatar} from "antd";
 import {UserOutlined} from "@ant-design/icons";
-import UserForm from "./UserForm";
-import {authStore} from "../store/authStore";
+import UserForm from "../form_components/UserForm";
+import {authStore} from "../../store/authStore";
 import {observer} from "mobx-react";
 
 const DropDownUser = observer(() => {

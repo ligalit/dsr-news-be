@@ -1,6 +1,6 @@
 import React from 'react';
 import {Avatar, Button, Select, Typography} from "antd";
-import {IUserProps} from "../interfaces/interface";
+import {IUserProps} from "../../interfaces/interface";
 import {DeleteOutlined, UserOutlined} from '@ant-design/icons';
 
 const User = ({u, handleChange, handleDelete, children}: IUserProps) => {

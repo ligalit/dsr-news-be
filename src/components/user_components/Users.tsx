@@ -1,5 +1,5 @@
 import React, {useEffect, useMemo} from 'react';
-import {adminStore} from "../store/adminStore";
+import {adminStore} from "../../store/adminStore";
 import {Select} from "antd";
 import {observer} from "mobx-react";
 import User from './User';

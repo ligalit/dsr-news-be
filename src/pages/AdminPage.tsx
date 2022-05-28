@@ -1,15 +1,17 @@
 import React from 'react';
-import Users from '../components/Users';
+import Tags from '../components/Tags';
+import Users from '../components/user_components/Users';
 
 const AdminPage = () => {
 
     return (
         <div style={{
-            margin: "10px",
+            marginTop: "10px",
             display: 'flex',
             flexDirection: "column",
             gap: "10px"
         }}>
+            <Tags/>
             <Users/>
         </div>
     );

@@ -2,8 +2,8 @@ import React, {useEffect, useMemo} from 'react';
 import {Avatar, Button, Form, Input, Select, Checkbox, Typography} from "antd";
 import {UserOutlined} from "@ant-design/icons";
 import {observer} from "mobx-react";
-import {userStore} from '../store/userStore';
-import {authStore} from '../store/authStore';
+import {userStore} from '../../store/userStore';
+import {authStore} from '../../store/authStore';
 
 const UserForm = observer(() => {
 
@@ -12,8 +12,7 @@ const UserForm = observer(() => {
     };
 
     useEffect(() => {
-                const getInfo = async () => await userStore.getUserInfo();
-                getInfo();
+                userStore.getUserInfo();
         }
         , [])
 
@@ -45,7 +44,7 @@ const UserForm = observer(() => {
                 showPhone: userStore.showPhone
             }}
         >
-            <Form.Item style={{textAlign: 'center'}}>
+            <Form.Item style={{textAlign: "center",marginBottom:"10px"}}>
                 <Avatar shape="square" size="large"
                         icon={<UserOutlined/>}/>
                 <Typography.Title style={{textAlign: "center", margin: "10px 0px 0px"}}

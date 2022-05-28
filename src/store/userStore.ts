@@ -1,5 +1,6 @@
 import {makeAutoObservable, runInAction} from "mobx";
 import {instance} from "../utils/instance";
+import {getHeaders} from "../utils/headers";
 
 class UserStore {
     firstName!: string;
@@ -17,13 +18,13 @@ class UserStore {
         makeAutoObservable(this);
     }
 
+    getUserRole(){
+        return this.role;
+    }
+
     async getAuthors() {
         try {
-            const res = await instance.get('user/authors',{
-                headers: {
-                    "token": `${localStorage.getItem("token")}`
-                }
-            });
+            const res = await instance.get('user/authors',getHeaders());
             if (res.status === 200) {
                 runInAction(() => this.authors = res?.data);
             }
@@ -34,11 +35,7 @@ class UserStore {
 
     async getUserInfo() {
         try {
-            const res = await instance.get('user/me', {
-                headers: {
-                    "token": `${localStorage.getItem("token")}`
-                }
-            });
+            const res = await instance.get('user/me', getHeaders());
 
             if (res.status === 200) {
                 const info = res?.data?.me;
@@ -51,11 +48,7 @@ class UserStore {
     
     async updateUserTags(data:Array<string>){
         try {
-            const res = await instance.put('user/me/tags',data,{
-                headers: {
-                    "token": `${localStorage.getItem("token")}`
-                }
-            });
+            const res = await instance.put('user/me/tags',data,getHeaders());
         }catch (e) {
             console.log(e);
         }
@@ -71,11 +64,7 @@ class UserStore {
         showPhone: boolean
     }) {
         try {
-            const res = await instance.put('user/me',data,{
-                headers:{
-                    "token":`${localStorage.getItem("token")}`
-                }
-            })
+            const res = await instance.put('user/me',data,getHeaders())
             if(res.status === 200){
                 runInAction(() => Object.assign(this,data));
             }
