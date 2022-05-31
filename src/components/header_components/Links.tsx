@@ -1,17 +1,16 @@
-import { observer } from 'mobx-react';
-import React, {useEffect} from 'react';
+import React from 'react';
 import {Link} from "react-router-dom";
 import {userStore} from "../../store/userStore";
-import {authStore} from "../../store/authStore";
+import {observer} from "mobx-react";
 
 const Links = observer(() => {
-    useEffect(() => {
-    },[authStore.isLogging])
     return (
         <div className="links">
             {localStorage.getItem("token") && <Link to={"/news"}>News</Link>}
-            {localStorage.getItem("token") && <Link to={"/subscriptions"}>Subscriptions</Link>}
-            {userStore.role === "admin" && localStorage.getItem("token") && <Link to={"/admin"}>Admin</Link>}
+            {localStorage.getItem("token") &&
+                <Link to={`/news/subscriptions?tags=${userStore.tags}`}>Subscriptions</Link>}
+            {JSON.parse(localStorage.getItem('user') || '{}').role === "admin" && localStorage.getItem("token") &&
+                <Link to={"/admin"}>Admin</Link>}
         </div>
     );
 });

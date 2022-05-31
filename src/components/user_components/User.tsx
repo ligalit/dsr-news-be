@@ -2,6 +2,8 @@ import React from 'react';
 import {Avatar, Button, Select, Typography} from "antd";
 import {IUserProps} from "../../interfaces/interface";
 import {DeleteOutlined, UserOutlined} from '@ant-design/icons';
+import {Link} from 'react-router-dom';
+import AbsoluteButton from "../AbsoluteButton";
 
 const User = ({u, handleChange, handleDelete, children}: IUserProps) => {
     return (
@@ -14,23 +16,15 @@ const User = ({u, handleChange, handleDelete, children}: IUserProps) => {
                 <Typography>{u.firstName}</Typography>
                 <Typography>{u.lastName}</Typography>
             </div>
+            <Button type="primary"><Link to={`user/${u.id}`}>User's News</Link></Button>
             <Select
                 style={{
                     width: "20%"
                 }}
                 defaultValue={u.role} onChange={(e) => handleChange(u.id, e)}
-                placeholder="Select user role">{children}</Select>
-            <Button style={{
-                position: "absolute",
-                right: 0,
-                top: 0,
-                borderTopLeftRadius:"0",
-                borderTopRightRadius: "3px",
-                borderBottomLeftRadius: "5px",
-                borderBottomRightRadius:"0",
-            }} type="primary" danger
-                    onClick={() => handleDelete(u.id)} icon={<DeleteOutlined/>}/>
-
+                placeholder="Select user role">{children}
+            </Select>
+            <AbsoluteButton right={"0"} icon={<DeleteOutlined/>} danger={true} onClick={() => handleDelete(u.id)}/>
         </div>
     );
 };

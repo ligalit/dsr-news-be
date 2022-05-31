@@ -7,14 +7,15 @@ import {authStore} from '../../store/authStore';
 
 const UserForm = observer(() => {
 
+    const {firstName, lastName, nickname} = JSON.parse(localStorage.getItem("user") || "{}");
+
     const onFinish = async (values: any) => {
         await userStore.updateUserInfo(values);
     };
 
     useEffect(() => {
-                userStore.getUserInfo();
-        }
-        , [])
+        userStore.getUserInfo();
+    }, [])
 
     const formInputItems = useMemo(() => [
         {name: "firstName", placeholder: "First name"},
@@ -35,16 +36,16 @@ const UserForm = observer(() => {
             name="user_form"
             onFinish={onFinish}
             initialValues={{
-                firstName: userStore.firstName,
-                lastName: userStore.lastName,
-                nickname: userStore.nickname,
-                phone: userStore.phone,
-                showFirstName: userStore.showFirstName,
-                showLastName: userStore.showLastName,
-                showPhone: userStore.showPhone
+                firstName,
+                lastName,
+                nickname,
+                phone: "",
+                showFirstName: false,
+                showLastName: false,
+                showPhone: false
             }}
         >
-            <Form.Item style={{textAlign: "center",marginBottom:"10px"}}>
+            <Form.Item style={{textAlign: "center", marginBottom: "10px"}}>
                 <Avatar shape="square" size="large"
                         icon={<UserOutlined/>}/>
                 <Typography.Title style={{textAlign: "center", margin: "10px 0px 0px"}}
@@ -53,7 +54,7 @@ const UserForm = observer(() => {
             {formInputItems.map((item) =>
                 <Form.Item key={item.name} name={item.name}><Input placeholder={item.placeholder}/></Form.Item>)}
             <Form.Item>
-                <Select disabled mode="multiple" placeholder="Tags" defaultValue={userStore.tags}>
+                <Select disabled mode="multiple" placeholder="tags" defaultValue={userStore.tags}>
                 </Select>
             </Form.Item>
             {formCheckBoxItems.map((item) => <Form.Item key={item.name} name={item.name} valuePropName="checked">

@@ -1,11 +1,8 @@
-import React, {useEffect} from 'react';
-import {observer} from "mobx-react";
-import {authStore} from "../../store/authStore";
+import React from 'react';
 import AuthorizationForm from './AuthorizationForm';
 
-const Form = observer(() => {
-    useEffect(() => {},[authStore.isLogging])
+const Form = () => {
     return localStorage.getItem("token") ? null : <AuthorizationForm/>;
-});
+};
 
 export default Form;

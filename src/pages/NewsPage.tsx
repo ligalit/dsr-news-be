@@ -1,20 +1,17 @@
 import React, {useEffect} from 'react';
 import {newsStore} from '../store/newsStore';
 import {Outlet} from "react-router-dom";
-import {Spin} from 'antd';
 import {observer} from "mobx-react";
+import {ILoadingProps} from "../interfaces/interface";
 
-const NewsPage = observer(() => {
-    useEffect(() => {
-        newsStore.getAllNews()
-    }, [])
+const NewsPage = observer(({isLogging}: ILoadingProps) => {
 
     useEffect(() => {
-    }, [newsStore.isLogging])
+        newsStore.getNewsTags();
+    }, []);
+
     return (
-        <>
-            {newsStore.isLogging ? <Spin size="large"/> : <Outlet/>}
-        </>
+        <Outlet/>
     );
 });
 

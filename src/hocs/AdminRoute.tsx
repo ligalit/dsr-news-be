@@ -1,14 +1,12 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import {Navigate, Outlet} from "react-router-dom";
-import {userStore} from "../store/userStore";
 import {observer} from "mobx-react";
-import {authStore} from "../store/authStore";
+import {ILoadingProps} from "../interfaces/interface";
 
-const AdminRoute = observer(() => {
-    useEffect(()=>{},[authStore.isLogging])
+const AdminRoute = observer(({role}: ILoadingProps) => {
 
-    if(localStorage.getItem("token") === null || userStore.role !== "admin"){
-        return <Navigate to="/" replace/>
+    if (localStorage.getItem("token") === null || role !== "admin") {
+        return <Navigate to="*" replace/>
     }
 
     return <Outlet/>;

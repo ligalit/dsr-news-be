@@ -1,17 +1,16 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import {Navigate, Outlet} from "react-router-dom";
-import {userStore} from "../store/userStore";
 import {observer} from "mobx-react";
-import {authStore} from "../store/authStore";
+import {ILoadingProps} from "../interfaces/interface";
+import {Spin} from "antd";
 
-const UserRoute = observer(() => {
-    useEffect(()=>{},[authStore.isLogging])
+const UserRoute = observer(({isLogging}: ILoadingProps) => {
 
-    if(localStorage.getItem("token") === null){
+    if (localStorage.getItem("token") === null) {
         return <Navigate to="/" replace/>
     }
 
-    return <Outlet/>;
+    return isLogging ? <Spin size="large"/> : <Outlet/>;
 });
 
 export default UserRoute;

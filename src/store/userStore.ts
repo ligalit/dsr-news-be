@@ -1,6 +1,7 @@
 import {makeAutoObservable, runInAction} from "mobx";
 import {instance} from "../utils/instance";
 import {getHeaders} from "../utils/headers";
+import {notificationStore} from "./notificationStore";
 
 class UserStore {
     firstName!: string;
@@ -13,18 +14,19 @@ class UserStore {
     showPhone!: boolean;
     role!: string;
     authors!: Array<{ id: number, firstName: string, lastName: string, nickname: string }>
+    private url: string = "user/";
 
     constructor() {
         makeAutoObservable(this);
     }
 
-    getUserRole(){
+    getUserRole() {
         return this.role;
     }
 
     async getAuthors() {
         try {
-            const res = await instance.get('user/authors',getHeaders());
+            const res = await instance.get(this.url + "authors", getHeaders());
             if (res.status === 200) {
                 runInAction(() => this.authors = res?.data);
             }
@@ -35,21 +37,30 @@ class UserStore {
 
     async getUserInfo() {
         try {
-            const res = await instance.get('user/me', getHeaders());
-
+            const res = await instance.get(this.url + "me", getHeaders());
             if (res.status === 200) {
                 const info = res?.data?.me;
-                runInAction(() => Object.assign(this,info));
+                runInAction(() => {
+                    Object.assign(this, info);
+                    localStorage.setItem("user", JSON.stringify(info));
+                });
             }
         } catch (e) {
             console.log(e);
         }
     }
-    
-    async updateUserTags(data:Array<string>){
+
+    async updateUserTags(tags: string[] | string) {
         try {
-            const res = await instance.put('user/me/tags',data,getHeaders());
-        }catch (e) {
+            const updatedTags = typeof tags === "string" ? this.tags.includes(tags) ? this.tags.filter(t => t !== tags) : [...this.tags, tags] : tags;
+            const res = await instance.put(this.url + "me/tags", updatedTags, getHeaders());
+            if (res.status === 204) {
+                notificationStore.setSuccess("Your tags was updated");
+                runInAction(() => {
+                    this.tags = updatedTags;
+                })
+            }
+        } catch (e) {
             console.log(e);
         }
     }
@@ -64,9 +75,10 @@ class UserStore {
         showPhone: boolean
     }) {
         try {
-            const res = await instance.put('user/me',data,getHeaders())
-            if(res.status === 200){
-                runInAction(() => Object.assign(this,data));
+            const res = await instance.put(this.url + "me", data, getHeaders())
+            if (res.status === 200) {
+                notificationStore.setSuccess("Info updated");
+                runInAction(() => Object.assign(this, data));
             }
         } catch (e) {
             console.log(e);
@@ -74,4 +86,5 @@ class UserStore {
     }
 }
 
-export const userStore = new UserStore();
+const userStore = new UserStore();
+export {userStore};

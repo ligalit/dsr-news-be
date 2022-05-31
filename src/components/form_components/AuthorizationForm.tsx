@@ -7,8 +7,8 @@ import {observer} from "mobx-react";
 
 const AuthorizationForm = observer(() => {
     const navigate = useNavigate();
-    const setPageUrl = () => localStorage.getItem("token") !== null ? navigate("/news", {replace: true}) : null;
     const [isLogin, setIsLogin] = useState(true);
+
     const onFinish = async (values: any) => {
         if (isLogin) {
             await authStore.logIn(values);
@@ -18,6 +18,8 @@ const AuthorizationForm = observer(() => {
             setPageUrl();
         }
     }
+
+    const setPageUrl = () => localStorage.getItem("token") !== null ? navigate("/news", {replace: true}) : null;
 
     return <Form
         name="authorization_form"
@@ -44,7 +46,7 @@ const AuthorizationForm = observer(() => {
             {isLogin ? "Log In" : "Sign Up"}
         </Button>
         <Form.Item style={{textAlign: "center"}}>
-            Or <Link to={""} onClick={() => setIsLogin(prevState => !prevState)}>{isLogin ? "Sign Up" : "Log In"}</Link>
+            Or <Link to="" onClick={() => setIsLogin(prevState => !prevState)}>{isLogin ? "Sign Up" : "Log In"}</Link>
         </Form.Item>
     </Form>
 });

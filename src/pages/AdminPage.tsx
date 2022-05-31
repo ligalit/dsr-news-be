@@ -1,20 +1,14 @@
 import React from 'react';
-import Tags from '../components/Tags';
-import Users from '../components/user_components/Users';
+import {Outlet} from 'react-router-dom';
+import {observer} from "mobx-react";
 
-const AdminPage = () => {
+const AdminPage = observer(() => {
 
     return (
-        <div style={{
-            marginTop: "10px",
-            display: 'flex',
-            flexDirection: "column",
-            gap: "10px"
-        }}>
-            <Tags/>
-            <Users/>
+        <div>
+            <Outlet/>
         </div>
     );
-};
+});
 
 export default AdminPage;
