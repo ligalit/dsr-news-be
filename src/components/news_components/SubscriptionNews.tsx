@@ -15,7 +15,6 @@ const SubscriptionNews = observer(() => {
     const memoTags = useMemo(() => userStore.tags, [userStore.tags])
 
     useEffect(() => {
-        console.log(Object.fromEntries([...params]));
         newsStore.getQueryNews({...Object.fromEntries([...params])})
     }, [params]);
 

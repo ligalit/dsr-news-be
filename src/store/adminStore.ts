@@ -5,7 +5,6 @@ import {newsStore} from "./newsStore";
 import {notificationStore} from "./notificationStore";
 import {INews, IUser} from "../interfaces/interface";
 import {AxiosError} from "axios";
-import {userStore} from "./userStore";
 
 class AdminStore {
     users: IUser[] = [];
@@ -40,8 +39,6 @@ class AdminStore {
 
     async updateUserRole(id: number, role: string) {
         try {
-            if (userStore.role === role)
-                throw new Error("You can't change role to yourself");
             const res = await instance.put(`admin/user/${id}`, {
                 role
             }, getHeaders());

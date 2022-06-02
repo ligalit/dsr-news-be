@@ -11,16 +11,6 @@ export interface IUser {
     tags: Array<string>
 }
 
-export interface IUserFormInformation {
-    firstName: string;
-    lastName: string;
-    nickname: string;
-    phone: string;
-    showFirstName: boolean;
-    showLastName: boolean;
-    showPhone: boolean;
-}
-
 export interface IUserProps {
     u: Omit<IUser, "login" | "tags">,
     handleChange: (id: number, value: string) => void;

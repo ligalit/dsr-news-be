@@ -24,7 +24,7 @@ class UserStore {
         return this.role;
     }
 
-    async getAuthors() {
+    async getAuthors(){
         try {
             const res = await instance.get(this.url + "authors", getHeaders());
             if (res.status === 200) {
